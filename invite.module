@@ -400,14 +400,12 @@ function invite_by_code_load($reg_code) {
  * @return bool|Invite
  */
 function invite_load_from_session() {
-  if (isset($_SESSION[INVITE_SESSION_CODE])) {
-    $invite = invite_by_code_load($_SESSION[INVITE_SESSION_CODE]);
+  // We change this so that it will load it from the path if possible.
+  if (arg(0) == 'user' && arg(1) == 'register' && $reg_code = arg(2)) {
+    $invite = invite_by_code_load($reg_code);
   }
-  // Legacy url support (user/register/regcode).
-  elseif (arg(0) == 'user' && arg(1) == 'register' && $reg_code = arg(2)) {
-    if ($invite = invite_by_code_load($reg_code)) {
-      $_SESSION[INVITE_SESSION_CODE] = $invite->reg_code;
-    }
+  elseif (isset($_SESSION[INVITE_SESSION_CODE])) {
+    $invite = invite_by_code_load($_SESSION[INVITE_SESSION_CODE]);
   }
 
   if (!empty($invite)) {
