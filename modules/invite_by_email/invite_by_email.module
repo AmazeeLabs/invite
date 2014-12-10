@@ -459,11 +459,15 @@ function invite_by_email_form_invite_form_validate($form, &$form_state) {
   }
 
   // Check that this email address wasn't used by user before.
-  $query = db_select('field_data_field_invitation_email_address', 'address');
+  // Disable for the moment this check. We have invitations (for example into
+  // projects) where we can invite a user multiple times (in different projects)
+  // Maybe we should implement anothe system of checking for duplicates, based
+  // on some sort of key.
+  /*$query = db_select('field_data_field_invitation_email_address', 'address');
   $query->join('invite', 'i', 'i.iid=address.entity_id');
   $duplicate = $query->condition('i.uid', $entity->inviter->uid->value(), '=')
     ->fields('address', array('field_invitation_email_address_value'))
-    ->condition('address.field_invitation_email_address_value', $mail_address, '=')
+    ->condition('address.field_invitation_email_address_value', $mail_address, '=')->condition('address.bundle', $invite->type)
     ->condition('address.deleted', 0, '=')
     ->range(0, 1)
     ->execute()
@@ -471,15 +475,7 @@ function invite_by_email_form_invite_form_validate($form, &$form_state) {
   if ($duplicate) {
     //form_set_error('field_invitation_email_address', t('You have invited this user already.'));
     form_set_error('field_invitation_email_address', t('The user has been already invited.'));
-  }
-  // Check also if the user is already a member.
-  $query = db_select('users', 'u')->fields('u', array('uid'));
-  $query->condition('u.mail', $mail_address);
-  $query->range(0, 1);
-  $result = $query->execute()->fetch();
-  if (!empty($result)) {
-    form_set_error('field_invitation_email_address', t('The user is already a member.'));
-  }
+  }*/
 }
 
 /**
