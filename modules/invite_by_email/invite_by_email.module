@@ -419,8 +419,9 @@ function invite_by_email_form_invite_form_alter(&$form, &$form_state, $form_id) 
     }
     else {
       // Fill defaults as needed.
-      $form['field_invitation_email_subject'][$language_subject][0]['value']['#default_value'] = variable_get('invite_default_mail_subject', '');
-      $form['field_invitation_email_body'][$language_subject][0]['value']['#default_value'] = variable_get('invite_default_mail_body', '');
+      // Change: the defaults should be loaded from the fields.
+      //$form['field_invitation_email_subject'][$language_subject][0]['value']['#default_value'] = variable_get('invite_default_mail_subject', '');
+      //$form['field_invitation_email_body'][$language_subject][0]['value']['#default_value'] = variable_get('invite_default_mail_body', '');
 
       // Add token help if enabled.
       if (module_exists('token') && $replace_tokens) {
