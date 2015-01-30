@@ -74,6 +74,8 @@ function invite_entity_info_alter(&$entity_info) {
         'path' => 'admin/structure/invite-types/manage/%invite_type',
         'real path' => 'admin/structure/invite-types/manage/' . $type,
         'bundle argument' => 4,
+        'access callback' => 'user_access',
+        'access arguments' => array('administer invite types'),
       ),
     );
   }
